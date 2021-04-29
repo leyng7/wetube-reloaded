@@ -5,10 +5,11 @@ export const deleteVideo = (req, res) => {
     res.send("Delete Video")
 };
 
-export const getEdit = (req, res) => {
+export const getEdit = async (req, res) => {
     const {id} = req.params;
+    const video = await Video.findById(id);
 
-    return res.render("edit", {pageTitle: `Editing:`});
+    return res.render("edit", {pageTitle: `Editing: ${video.title}`, video});
 };
 
 export const postEdit = (req, res) => {
@@ -45,13 +46,14 @@ export const postUpload = async (req, res) => {
 
 export const search = (req, res) => res.send("Search Video");
 
-export const watch = (req, res) => {
+export const watch = async (req, res) => {
     const {id} = req.params;
-    return res.render("watch", {pageTitle: `Watching `});
+    const video = await Video.findById(id);
+
+    return res.render("watch", { pageTitle: video.title, video });
 };
 
 export const home = async (req, res) => {
     const videos = await Video.find({});
-    console.log(videos);
     return res.render("home", {pageTitle: "Home", videos})
 };
