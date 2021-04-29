@@ -9,7 +9,7 @@ export const search = (req, res) => res.send("Search Video");
 
 export const see = (req, res) => res.send("See Video");
 
-export const trending = (req, res) => res.send("Home Page Videos");
+export const trending = (req, res) => res.render("home");
 
 export const upload = (req, res) => res.send("Upload Video");
 
