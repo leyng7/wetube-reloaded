@@ -33,10 +33,10 @@ const videoSchema = new mongoose.Schema({
     }
 });
 
-videoSchema.pre("save", async function () {
-    this.hashtags = this.hashtags[0]
+videoSchema.static("formatHashtags", hashtags => {
+    return hashtags
         .split(",")
-        .map(word => word.startsWith("#") ? word : "#" + word)
+        .map(word => word.startsWith("#") ? word : "#" + word);
 });
 
 const Video = mongoose.model("Video", videoSchema);
