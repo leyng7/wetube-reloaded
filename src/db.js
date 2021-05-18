@@ -4,6 +4,7 @@ mongoose.connect("mongodb://192.168.0.15:27017/wetube", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useFindAndModify: false,
+    useCreateIndex: true,
 });
 
 const db = mongoose.connection;
