@@ -10,12 +10,13 @@ html(lang="ko")
         ul
           li
             a(href="/") Home
-          li
-            a(href="/join") Join
-          li
-            a(href="/login") Login
+          if !req.session.loggedIn
             li
-              a(href="/search") Search
+              a(href="/join") Join
+            li
+              a(href="/login") Login
+          li
+            a(href="/search") Search
           li
             a(href="/videos/upload") Upload Video
     main
