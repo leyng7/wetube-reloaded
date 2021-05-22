@@ -4,8 +4,31 @@ import fetch from "node-fetch";
 
 export const getEdit = (req, res) => res.render("edit-profile", {pageTitle: "Edit Profile"});
 
-export const postEdit = (req, res) => {
-    res.render("edit-profile", {pageTitle: "Edit Profile"});
+export const postEdit = async (req, res) => {
+    const pageTitle = "Edit Profile";
+    const {
+        session: {
+            user: {_id}
+        },
+        body: {name, email, username, location}
+    } = req;
+
+    try {
+        await User.findByIdAndUpdate(_id, {
+            name,
+            email,
+            username,
+            location
+        });
+
+        req.session.user = await User.findById(_id);
+    } catch (error) {
+        return res.status(400).render("edit-profile", {
+            pageTitle,
+            errorMessage: error._message,
+        })
+    }
+    return res.redirect("/users/edit");
 };
 
 export const getJoin = (req, res) => res.render("join", {pageTitle: "Join"});
