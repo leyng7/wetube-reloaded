@@ -7,6 +7,10 @@ const videoSchema = new mongoose.Schema({
         trim: true,
         maxLength: 80,
     },
+    fileUrl: {
+        type: String,
+        required: true
+    },
     description: {
         type: String,
         required: true,
@@ -30,6 +34,11 @@ const videoSchema = new mongoose.Schema({
             default: 0,
             required: true
         },
+    },
+    owner: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: "User"
     }
 });
 
