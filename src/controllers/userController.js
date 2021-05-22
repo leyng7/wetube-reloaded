@@ -14,14 +14,17 @@ export const postEdit = async (req, res) => {
     } = req;
 
     try {
-        await User.findByIdAndUpdate(_id, {
-            name,
-            email,
-            username,
-            location
-        });
-
-        req.session.user = await User.findById(_id);
+        req.session.user = await User.findByIdAndUpdate(
+            _id,
+            {
+                name,
+                email,
+                username,
+                location
+            },
+            {
+                new: true
+            });
     } catch (error) {
         return res.status(400).render("edit-profile", {
             pageTitle,
