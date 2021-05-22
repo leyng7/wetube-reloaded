@@ -2,7 +2,11 @@ import User from "../models/User";
 import bcrypt from "bcrypt";
 import fetch from "node-fetch";
 
-export const edit = (req, res) => res.send("Edit User");
+export const getEdit = (req, res) => res.render("edit-profile", {pageTitle: "Edit Profile"});
+
+export const postEdit = (req, res) => {
+    res.render("edit-profile", {pageTitle: "Edit Profile"});
+};
 
 export const getJoin = (req, res) => res.render("join", {pageTitle: "Join"});
 
@@ -68,11 +72,9 @@ export const postLogin = async (req, res) => {
 };
 
 export const logout = (req, res) => {
-    res.session.destroy();
+    req.session.destroy();
     return res.redirect("/");
 };
-
-export const remove = (req, res) => res.send("Remove User");
 
 export const see = (req, res) => res.send("See User Profile");
 
@@ -131,6 +133,7 @@ export const finishGithubLogin = async (req, res) => {
         let user = await User.findOne({email: emailObj.email});
         if (!user) {
             user = await User.create({
+                avatarUrl: userData.avatar_url,
                 name: userData.name,
                 username: userData.login,
                 email: emailObj.email,
