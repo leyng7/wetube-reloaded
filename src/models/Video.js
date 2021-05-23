@@ -29,11 +29,6 @@ const videoSchema = new mongoose.Schema({
             default: 0,
             required: true
         },
-        rating: {
-            type: Number,
-            default: 0,
-            required: true
-        },
     },
     owner: {
         type: mongoose.Schema.Types.ObjectId,
