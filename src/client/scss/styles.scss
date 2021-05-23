@@ -1,6 +1,13 @@
-@import "./_variables.scss";
+@import "./config/variables";
+@import "./config/reset";
 
-body {
-  background-color: $red;
-  color: $color;
+// Components
+@import "./components/header";
+
+// Screens
+
+// Defaults
+a {
+  color: inherit;
+  text-decoration: none;
 }
