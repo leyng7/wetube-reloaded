@@ -47,6 +47,7 @@ export const postEdit = async (req, res) => {
 
   const {user} = req.session;
   if (String(video.owner) !== String(user._id)) {
+    req.flash("error", "You are not the the owner of the video.");
     return res.status(403).redirect("/");
   }
 
@@ -56,6 +57,8 @@ export const postEdit = async (req, res) => {
       description,
       hashtags: Video.formatHashtags(hashtags)
     });
+
+      req.flash("success", "Changes saved.");
 
     return res.redirect(`/videos/${id}`);
   } catch (error) {
@@ -72,7 +75,6 @@ export const postUpload = async (req, res) => {
     user: {_id}
   } = req.session;
   const {video, thumb} = req.files;
-  console.log(video, thumb);
   const {title, description, hashtags} = req.body;
   try {
     const newVideo = await Video.create({
@@ -105,6 +107,7 @@ export const deleteVideo = async (req, res) => {
 
   const {user} = req.session;
   if (String(video.owner) !== String(user._id)) {
+    req.flash("error", "Not authorized");
     return res.status(403).redirect("/");
   }
 
