@@ -7,7 +7,8 @@ module.exports = {
     videoPlayer: "./src/client/js/videoPlayer.js",
     recorder: "./src/client/js/recorder.js",
   },
-  mode: "development",
+  // mode: "development",
+  mode: "production",
   watch: true,
   plugins: [
     new MiniCssExtractPlugin({
@@ -34,6 +35,11 @@ module.exports = {
         test: /\.scss$/,
         use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"],
       },
+      {
+        test: /\.css$/,
+        use: [MiniCssExtractPlugin.loader, 'css-loader'
+        ]
+      }
     ],
   },
 };
