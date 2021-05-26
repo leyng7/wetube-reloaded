@@ -1,21 +1,30 @@
 extends base
 
 block content
-  div.upload__container
-    div.upload__video
-      video#preview
-      button#actionBtn.social__btn Start Recording
-    if errorMessage
-      span=errorMessage
-    form(method="POST", enctype="multipart/form-data")
-      label(for="video") Video File
-      input(type="file", accept="video/*", required, id="video", name="video")
-      label(for="thumb") Thumbnail File
-      input(type="file", accept="image/*", required, id="thumb", name="thumb")
-      input(placeholder="Title", required, type="text", name="title", maxlength=80)
-      input(placeholder="Description", required, type="text", name="description", minlength=5)
-      input(placeholder="Hashtags, separated by comma.", required, type="text", name="hashtags")
-      input(type="submit", value="Upload Video")
+  div.row.mb-2
+    video#preview.col-12
+  div.text-center
+    button#actionBtn.btn.btn-primary 녹화 시작
+  if errorMessage
+    span=errorMessage
+  form(method="POST", enctype="multipart/form-data")
+    div.mb-3
+      label(for="video").form-label 동영상
+      input(type="file", accept="video/*", required, id="video", name="video").form-control
+    div.mb-3
+      label(for="thumb").form-label 썸네일
+      input(type="file", accept="image/*", required, id="thumb", name="thumb").form-control
+    div.mb-3
+      label(for="title").form-label 제목
+      input(placeholder="동영상 제목", required, type="text", id="title", name="title", maxlength=80).form-control
+    div.mb-3
+      label(for="description").form-label 설명
+      input(placeholder="동영상 설명", required, type="text", id="description", name="description", minlength=5).form-control
+    div.mb-3
+      label(for="hashtags").form-label 해쉬태그
+      input(placeholder="게임, 위튜브, 영상", required, type="text", id="hashtags", name="hashtags").form-control
+    div.d-flex.justify-content-end
+      input(type="submit", value="업로드").btn.btn-primary
 
 block scripts
   script(src="/static/js/recorder.js")

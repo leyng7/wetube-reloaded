@@ -23,7 +23,7 @@ const downloadFile = (fileUrl, fileName) => {
 
 const handleDownload = async () => {
   actionBtn.removeEventListener("click", handleDownload);
-  actionBtn.innerText = "Transcoding...";
+  actionBtn.innerText = "인코딩중...";
   actionBtn.disabled = true;
 
   const ffmpeg = createFFmpeg({log: true});
@@ -67,7 +67,7 @@ const handleDownload = async () => {
 };
 
 const handleStart = () => {
-  actionBtn.innerText = "Recording";
+  actionBtn.innerText = "녹화중";
   actionBtn.disabled = true;
 
   actionBtn.removeEventListener("click", handleStart);
@@ -79,7 +79,7 @@ const handleStart = () => {
     video.src = videoFile;
     video.loop = true;
     video.play();
-    actionBtn.innerText = "Download";
+    actionBtn.innerText = "다운로드";
     actionBtn.disabled = false;
     actionBtn.addEventListener("click", handleDownload);
   }

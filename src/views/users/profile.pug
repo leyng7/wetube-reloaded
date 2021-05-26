@@ -5,7 +5,7 @@ block content
   div.profile__data
     img(src="/" + user.avatarUrl).avatar
     h3=user.name
-  div.video-grid
+  div.row.row-cols-1.row-cols-md-3.g-4
     each video in user.videos
       +video(video)
     else
