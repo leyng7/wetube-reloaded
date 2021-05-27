@@ -1,8 +1,12 @@
 extends base
 
 block content
-  div#videoContainer(data-id=video._id).row
-    video(autoplay=true, controls=true).col-md-12
+  div#videoContainer(data-id=video._id).card.mb-3
+    video(autoplay=true, controls=true, height='auto').card-img-top
       source(src="/" + video.fileUrl, type="video/mp4")
+    div.card-body
+      h5.card-title=video.title
+      p.card-text
+        small.text-muted 조회수 #{video.meta.views}회
 block scripts
   // script(src="/static/js/videoPlayer.js")
