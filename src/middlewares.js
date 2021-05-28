@@ -11,7 +11,7 @@ export const protectorMiddleware = (req, res, next) => {
   if (req.session.loggedIn) {
     return next();
   }
-  req.flash("error", "Not authorized");
+  req.flash("error", "로그인이 필요합니다.");
   return res.redirect("/login");
 }
 
@@ -19,20 +19,20 @@ export const publicOnlyMiddleware = (req, res, next) => {
   if (!req.session.loggedIn) {
     return next();
   }
-  req.flash("error", "Log in first.");
+  req.flash("error", "로그아웃이 필요합니다.");
   return res.redirect("/");
 }
 
 export const avatarUpload = multer({
   dest: "uploads/avatars/",
   limits: {
-    fileSize: 3000000,
+    fileSize: 1024 * 1024 * 3
   },
 });
 
 export const videoUpload = multer({
   dest: "uploads/videos/",
   limits: {
-    fileSize: 10000000,
+    fileSize: 1024 * 1024 * 10
   },
 });

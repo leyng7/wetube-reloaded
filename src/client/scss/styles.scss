@@ -1,3 +1,4 @@
+/*
 @import "./config/variables";
 @import "./config/reset";
 
@@ -63,4 +64,15 @@ main {
     background-color: tomato;
     color: white;
   }
+}
+*/
+
+// Defaults
+a {
+  text-decoration: none !important;
+}
+
+#avatar-img {
+  width: 150px;
+  height: 150px;
 }

@@ -10,7 +10,7 @@ export const postEdit = async (req, res) => {
     session: {
       user: {_id, avatarUrl}
     },
-    body: {name, email, username, location},
+    body: {name, location},
     file
   } = req;
 
@@ -20,19 +20,17 @@ export const postEdit = async (req, res) => {
       {
         avatarUrl: file ? file.path : avatarUrl,
         name,
-        email,
-        username,
         location
       },
       {
         new: true
       });
   } catch (error) {
-    return res.status(400).render("edit-profile", {
-      pageTitle,
-      errorMessage: error._message,
-    })
+    req.flash("error", error._message);
+    return res.status(400).render("edit-profile", {pageTitle});
   }
+
+  req.flash("success", "정보가 변경 되었습니다.");
   return res.redirect("/users/edit");
 };
 
@@ -42,17 +40,13 @@ export const postJoin = async (req, res) => {
   const {name, email, username, password, password2, location} = req.body;
   const pageTitle = "Join";
   if (password !== password2) {
-    return res.status(400).render("join", {
-      pageTitle,
-      errorMessage: "Password confirmation does not match."
-    })
+    req.flash("error", "패스워드를 확인해주세요.");
+    return res.status(400).render("join", {pageTitle})
   }
   const exists = await User.exists({$or: [{username}, {email}]});
   if (exists) {
-    return res.status(400).render("join", {
-      pageTitle,
-      errorMessage: "This username/email is already taken.",
-    })
+    req.flash("error", "이미 존재하는 아이디/이메일 입니다..");
+    return res.status(400).render("join", {pageTitle})
   }
 
   try {
@@ -65,10 +59,8 @@ export const postJoin = async (req, res) => {
     });
     return res.redirect("/login");
   } catch (error) {
-    return res.status(400).render("join", {
-      pageTitle: "Upload Video",
-      errorMessage: error._message,
-    });
+    req.flash("error", error._message);
+    return res.status(400).render("join", {pageTitle: "Upload Video"});
   }
 };
 
@@ -79,18 +71,14 @@ export const postLogin = async (req, res) => {
   const pageTitle = 'Login';
   const user = await User.findOne({username, socialOnly: false});
   if (!user) {
-    return res.status(400).render("login", {
-      pageTitle,
-      errorMessage: "An account with this username does not exists.",
-    });
+    req.flash("error", "아이디를 확인하여 주세요.");
+    return res.status(400).render("login", {pageTitle});
   }
 
   const ok = await bcrypt.compare(password, user.password);
   if (!ok) {
-    return res.status(400).render("login", {
-      pageTitle,
-      errorMessage: "Wrong password",
-    });
+    req.flash("error", "비밀번호를 확인하여 주세요.");
+    return res.status(400).render("login", {pageTitle});
   }
 
   req.session.loggedIn = true;
@@ -100,7 +88,9 @@ export const postLogin = async (req, res) => {
 };
 
 export const logout = (req, res) => {
-  req.session.destroy();
+  /*req.session.destroy();*/
+  req.session.loggedIn = false;
+  req.session.user = null;
   req.flash("info", "Bye Bye");
   return res.redirect("/");
 };

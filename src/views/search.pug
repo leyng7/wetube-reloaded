@@ -3,12 +3,12 @@ include mixins/video
 
 block content
   form(method="GET").search__form
-    input(placeholder="Search by title", name="keyword", type="text", value=keyword)
-    button
-      i.fas.fa-search
-
-  div.video-grid
+    .input-group.mb-3
+      input.form-control(type='text' placeholder="제목을 입력해주세요." name="keyword" value=keyword)
+      span.input-group-text
+        i.fas.fa-search
+  .row.row-cols-1.row-cols-md-3.g-4
     each video in videos
       +video(video)
     else
-      span.empty__message No videos found
+      span.empty__message 비디오가 없습니다.

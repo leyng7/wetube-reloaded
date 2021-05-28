@@ -1,17 +1,30 @@
 extends base
 
 block content
-    if errorMessage
-        span=errorMessage
-    form(method="POST")
-        input(placeholder="Name", name="name", type="text", required)
-        input(placeholder="Email", name="email", type="email", required)
-        input(placeholder="Username", name="username", type="text", required)
-        input(placeholder="Password", name="password", type="password", required)
-        input(placeholder="Confirm Password", name="password2", type="password", required)
-        input(placeholder="Location", name="location", type="text", required)
-        input(type="submit", value="Join")
-        include partials/social-login
-    div.auth-switch
-        span Already have an account?
-        a(href="/login") Log in now &rarr;
+  div.row.justify-content-center.mt-5
+    div.card.col-6
+      div.card-body
+        form(method="POST")
+          div.mb-3
+            label(for="name").form-label 닉네임
+            input(placeholder="Name", id="name", name="name", type="text", required).form-control
+          div.mb-3
+            label(for="email").form-label 이메일
+            input(placeholder="Email", id="email", name="email", type="email", required).form-control
+          div.mb-3
+            label(for="username").form-label 아이디
+            input(placeholder="Username", id="username", name="username", type="text", required).form-control
+          div.mb-3
+            label(for="password").form-label 비밀번호
+            input(placeholder="Password", id="password", name="password", type="password", required).form-control
+          div.mb-3
+            label(for="password2").form-label 비밀번호 확인
+            input(placeholder="Confirm Password", id="password2", name="password2", type="password", required).form-control
+          div.mb-3
+            label(for="location").form-label 지역
+            input(placeholder="Location", id="location", name="location", type="text", required).form-control
+          div.d-flex.justify-content-end
+            input(type="submit", value="회원가입").btn.btn-primary
+          include partials/social-login
+        div.text-end
+          a(href="/login").link-primary 로그인 &rarr;
