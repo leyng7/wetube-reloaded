@@ -1,5 +1,6 @@
 import Video from "../models/Video";
 import User from "../models/User";
+import moment from "moment";
 
 export const home = async (req, res) => {
   const videos = await Video.find({})
@@ -16,9 +17,13 @@ export const watch = async (req, res) => {
     return res.status(404).render("404", {pageTitle: "Video not found."});
   }
 
+  video.meta.views = video.meta.views + 1;
+  await video.save();
+
   return res.render("watch", {
     pageTitle: video.title,
-    video
+    video,
+    createAt: moment(video.createdAt).format('YYYY. M. D')
   });
 };
 
@@ -90,9 +95,9 @@ export const postUpload = async (req, res) => {
     user.save();
     return res.redirect("/");
   } catch (error) {
+    req.flash("error", error._message);
     return res.render("upload", {
-      pageTitle: "Upload Video",
-      errorMessage: error._message,
+      pageTitle: "Upload Video"
     });
   }
 };
@@ -107,7 +112,7 @@ export const deleteVideo = async (req, res) => {
 
   const {user} = req.session;
   if (String(video.owner) !== String(user._id)) {
-    req.flash("error", "Not authorized");
+    req.flash("error", "권한이 없습니다.");
     return res.status(403).redirect("/");
   }
 

@@ -3,7 +3,7 @@ include ../mixins/video
 
 block content
   .text-center.mb-3
-    img(src="/" + user.avatarUrl)#avatar-img.rounded-circle
+    img(src=user.avatarUrl)#avatar-img.rounded-circle
   .row
     h3.text-center=user.name
   div.row.row-cols-1.row-cols-md-3.g-4

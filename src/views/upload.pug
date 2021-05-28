@@ -2,14 +2,14 @@ extends base
 
 block content
   div.row
-    .col-md-6
+    .col-lg-6.d-none.d-lg-block
       .card
         .card-header 동영상 녹화 프로그램
         .card-body
           video#preview.w-100.mb-2
           div.text-center
             button#actionBtn.btn.btn-primary 녹화 시작
-    .col-md-6
+    .col-lg-6
       .card
         .card-body
           form(method="POST", enctype="multipart/form-data")

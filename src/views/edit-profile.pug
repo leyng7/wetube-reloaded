@@ -2,24 +2,27 @@ extends base
 
 block content
   div.row.justify-content-center
-    form(method="POST", enctype="multipart/form-data").col-6
-      div.mb-3
-        label(for="avatar").form-label 프로필 사진
-        input(type="file", id="avatar", name="avatar", accept="image/*").form-control
-      div.mb-3
-        label(for="username").form-label 아이디
-        input(readonly=true, id="username", name="username", type="text", required, value=loggedInUser.username).form-control
-      div.mb-3
-        label(for="email").form-label 이메일
-        input(readonly=true, id="email", name="email", type="email", required, value=loggedInUser.email).form-control
-      div.mb-3
-        label(for="name").form-label 닉네임
-        input(placeholder="Name", id="name", name="name", type="text", required, value=loggedInUser.name).form-control
-      div.mb-3
-        label(for="location").form-label 지역
-        input(placeholder="Location", id="location", name="location", type="text", required, value=loggedInUser.location).form-control
-      div.d-flex.justify-content-end
-        input(type="submit", value="수정").btn.btn-primary
-      if !loggedInUser.socialOnly
-        div
-          a(href="change-password") 패스워드 변경 &rarr;
+    .col-md-6
+      .card
+        .card-body
+          form(method="POST", enctype="multipart/form-data")
+            div.mb-3
+              label(for="avatar").form-label 프로필 사진
+              input(type="file", id="avatar", name="avatar", accept="image/*").form-control
+            div.mb-3
+              label(for="username").form-label 아이디
+              input(readonly=true, id="username", name="username", type="text", required, value=loggedInUser.username).form-control
+            div.mb-3
+              label(for="email").form-label 이메일
+              input(readonly=true, id="email", name="email", type="email", required, value=loggedInUser.email).form-control
+            div.mb-3
+              label(for="name").form-label 닉네임
+              input(placeholder="Name", id="name", name="name", type="text", required, value=loggedInUser.name).form-control
+            div.mb-3
+              label(for="location").form-label 지역
+              input(placeholder="Location", id="location", name="location", type="text", required, value=loggedInUser.location).form-control
+            if !loggedInUser.socialOnly
+              div.float-start
+                a(href="change-password") 패스워드 변경 &rarr;
+            div.d-flex.justify-content-end
+              input(type="submit", value="수정").btn.btn-primary
