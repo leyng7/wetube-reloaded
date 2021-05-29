@@ -1,7 +1,6 @@
 import "regenerator-runtime";
 import "../scss/styles.scss";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import moment from "moment";
 import { Toast } from "bootstrap";
 
 const toastElList = [].slice.call(document.querySelectorAll('.toast'));

@@ -1,7 +1,7 @@
 extends base
 
 block content
-  div#videoContainer(data-id=video._id).card.mb-3
+  div(data-id=video._id)#videoContainer.card.mb-3
     video(controls=true height='auto').card-img-top
       source(src="/" + video.fileUrl, type="video/mp4")
     div.card-body
@@ -20,9 +20,11 @@ block content
       hr
       #video__comments.row.ps-3
         each comment in video.comments.reverse()
-          div.p-1
-            i.fas.fa-comment
-            span.ps-1=comment.text
+          div(data-id=comment.id).p-1.d-flex.justify-content-between
+            div
+              i.fas.fa-comment
+              span.ps-1=comment.text
+            a(href="#") ❌
 block scripts
   if loggedIn
     script(src="/static/js/commentSection.js")
