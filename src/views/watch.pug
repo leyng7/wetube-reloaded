@@ -2,11 +2,27 @@ extends base
 
 block content
   div#videoContainer(data-id=video._id).card.mb-3
-    video(autoplay=true, controls=true, height='auto').card-img-top
+    video(controls=true height='auto').card-img-top
       source(src="/" + video.fileUrl, type="video/mp4")
     div.card-body
       h5.card-title=video.title
       p.card-text
         small.text-muted 조회수 #{video.meta.views}회 #{createAt}
+      if String(video.owner._id) === String(loggedInUser._id)
+        .row.mb-2
+          a(href=`${video.id}/edit`).text-end 수정 &rarr;
+          a(href=`${video.id}/delete`).text-end 삭제 &rarr;
+      if loggedIn
+        .row
+          form#commentForm
+            textarea.form-control.mb-2
+            button.btn.btn-sm.btn-primary.float-end 댓글 등록
+      hr
+      #video__comments.row.ps-3
+        each comment in video.comments.reverse()
+          div.p-1
+            i.fas.fa-comment
+            span.ps-1=comment.text
 block scripts
-  // script(src="/static/js/videoPlayer.js")
+  if loggedIn
+    script(src="/static/js/commentSection.js")
