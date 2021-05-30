@@ -168,5 +168,26 @@ export const createComment = async (req, res) => {
   });
   video.comments.push(comment._id);
   video.save();
-  return res.status(201).json({ newCommentId: comment._id });
+  return res.status(201).json({newCommentId: comment._id});
+};
+
+
+export const deleteComment = async (req, res) => {
+  const {
+    session: {user},
+    params: {commentId}
+  } = req;
+
+
+  const comment = await Comment.findById(commentId);
+  if (!comment) {
+    return res.status(400).json({error: "해당 댓글이 존재하지 않습니다."});
+  }
+
+  if (String(comment.owner._id) !== String(user._id)) {
+    return res.status(403).json({error: "권한이 없습니다."});
+  }
+
+  await Comment.findByIdAndDelete(commentId);
+  return res.sendStatus(200);
 };

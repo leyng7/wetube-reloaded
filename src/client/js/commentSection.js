@@ -1,5 +1,6 @@
 const videoContainer = document.getElementById("videoContainer");
 const form = document.getElementById("commentForm");
+const videoComments = document.getElementById("video__comments");
 
 const addComment = (text, id) => {
   const videoComments = document.getElementById("video__comments");
@@ -31,7 +32,7 @@ const handleSubmit = async event => {
   if (!text) {
     return;
   }
-  const response = await fetch(`/api/videos/${videoId}/comment`, {
+  const response = await fetch(`/api/videos/${videoId}/comments`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -45,7 +46,32 @@ const handleSubmit = async event => {
   }
 };
 
+
+const handleCommentDelete = async event => {
+  if (event.target.tagName === "A" && confirm("삭제하시겠습니까?")) {
+    const comment = event.target.parentNode;
+    const videoId = videoContainer.dataset.id;
+    const commentId = comment.dataset.id;
+    console.log("삭제");
+    const response = await fetch(`/api/videos/${videoId}/comments/${commentId}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      }
+    })
+    if (response.status === 200) {
+      event.target.parentNode.remove();
+      alert("정상적으로 삭제 하였습니다.");
+    } else {
+      const {error} = await response.json();
+      alert(error);
+    }
+  }
+}
+
 if (form) {
   form.addEventListener("submit", handleSubmit);
 }
+
+videoComments.addEventListener("click", handleCommentDelete);
 
