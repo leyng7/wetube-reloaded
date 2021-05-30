@@ -29,6 +29,7 @@ app.use(
 
 app.use(flash());
 app.use(localsMiddleware);
+app.use("/favicon.ico", express.static("favicon.ico"))
 app.use("/static", express.static("assets"))
 app.use("/uploads", express.static("uploads"))
 app.use("/", rootRouter);

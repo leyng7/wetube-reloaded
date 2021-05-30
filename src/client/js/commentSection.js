@@ -52,20 +52,20 @@ const handleCommentDelete = async event => {
     const comment = event.target.parentNode;
     const videoId = videoContainer.dataset.id;
     const commentId = comment.dataset.id;
-    console.log("삭제");
+
     const response = await fetch(`/api/videos/${videoId}/comments/${commentId}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
       }
-    })
+    });
     if (response.status === 200) {
       event.target.parentNode.remove();
       alert("정상적으로 삭제 하였습니다.");
     } else {
       const {error} = await response.json();
       alert(error);
-    }
+    };
   }
 }
 
