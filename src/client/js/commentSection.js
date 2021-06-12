@@ -2,24 +2,41 @@ const videoContainer = document.getElementById("videoContainer");
 const form = document.getElementById("commentForm");
 const videoComments = document.getElementById("video__comments");
 
-const addComment = (text, id) => {
+const addComment = (text, id, avatarUrl, name) => {
   const videoComments = document.getElementById("video__comments");
+
   const newComment = document.createElement("div");
-  newComment.className = "p-1 d-flex justify-content-between";
+  newComment.className = "p-1 d-flex justify-content-between mb-2";
   newComment.dataset.id = id;
+
+  const img = document.createElement("img");
+  img.className = 'rounded-circle'
+  img.src = avatarUrl;
+  img.width = 45;
+  img.height = 45;
+
+  const flexDiv = document.createElement("div");
+  flexDiv.className = 'd-flex';
+
   const div = document.createElement("div");
-  const icon = document.createElement("i");
-  icon.className = "fas fa-comment";
-  const span = document.createElement("span");
-  span.className = "p-1";
-  span.innerText = text;
+  div.className = 'ms-2';
+
+  const nameDiv = document.createElement("div");
+  nameDiv.innerText = name;
+
+  const textDiv = document.createElement("div");
+  textDiv.className = 'small';
+  textDiv.innerText = text;
+
   const a = document.createElement("a");
   a.href = "#";
   a.innerText = "❌";
 
-  div.appendChild(icon);
-  div.appendChild(span);
-  newComment.appendChild(div);
+  div.appendChild(nameDiv);
+  div.appendChild(textDiv);
+  flexDiv.appendChild(img);
+  flexDiv.appendChild(div);
+  newComment.appendChild(flexDiv);
   newComment.appendChild(a);
   videoComments.prepend(newComment);
 };
@@ -41,8 +58,8 @@ const handleSubmit = async event => {
   });
   if (response.status === 201) {
     textarea.value = "";
-    const {newCommentId} = await response.json();
-    addComment(text, newCommentId);
+    const {newCommentId, avatarUrl, name} = await response.json();
+    addComment(text, newCommentId, avatarUrl, name);
   }
 };
 

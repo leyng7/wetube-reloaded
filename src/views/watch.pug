@@ -12,20 +12,29 @@ block content
         .row.mb-2
           a(href=`${video.id}/edit`).text-end 수정 &rarr;
           a(href=`${video.id}/delete`).text-end 삭제 &rarr;
+      hr
+      div
+        div.d-flex.mb-2
+          img(src=video.owner.avatarUrl, width='45px', height='45px').rounded-circle
+          div.ms-2
+            div.mt-2.mb-2=video.owner.name
+            div.small=video.description
+      hr
       if loggedIn
         .row
           form#commentForm
             textarea.form-control.mb-2
             button.btn.btn-sm.btn-primary.float-end 댓글 등록
-      hr
       #video__comments.row.ps-3
         each comment in video.comments.reverse()
-          div(data-id=comment.id).p-1.d-flex.justify-content-between
-            div
-              i.fas.fa-comment
-              span.ps-1=comment.text
+          div(data-id=comment.id).p-1.d-flex.justify-content-between.mb-2
+            div.d-flex
+              img(src=comment.owner.avatarUrl, width='45px', height='45px').rounded-circle
+              div.ms-2
+                div=comment.owner.name
+                div.small=comment.text
             if String(comment.owner._id) === String(loggedInUser._id)
-              a(href="#") ❌
+              a(href="javascript:return false;") ❌
 block scripts
   if loggedIn
     script(src="/static/js/commentSection.js")

@@ -96,7 +96,6 @@ export const logout = (req, res) => {
 };
 
 export const see = async (req, res) => {
-  console.log(id);
   const {id} = req.params;
   try {
     const user = await User.findById(id).populate({

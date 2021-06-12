@@ -1,10 +1,12 @@
 mixin video(video)
   div.col
-    div.card
+    div.card.h-100
       a(href=`/videos/${video.id}`)
         img(src=`/${video.thumbUrl}`).card-img-top
       div.card-body
-        div.card-title=video.title
-        p.card-text
+        div.card-title.d-flex
+          img(src=video.owner.avatarUrl, width='25px').rounded-circle
+          div.ms-2=video.title
+        p.card-text.small
           span #{video.owner.name} •
           span #{video.meta.views} 회
